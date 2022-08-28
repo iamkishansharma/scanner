@@ -39,7 +39,7 @@ const Home = ({navigation}) => {
       <QRCodeScanner
         reactivate={true}
         reactivateTimeout={3000}
-        cameraStyle={{width: 280, height: 400, alignSelf: 'center'}}
+        cameraStyle={{width: '80%', height: 400, alignSelf: 'center'}}
         onRead={onSuccess}
         flashMode={
           isFlashOn
@@ -48,17 +48,35 @@ const Home = ({navigation}) => {
         }
         topContent={
           <View style={styles.cardHolder}>
-            <Image
-              width={10}
-              height={10}
-              source={require('../assets/cards/card_imepay.png')}
-              style={styles.cards}
+            <Avatar.Icon
+              icon="web"
+              size={50}
+              color={BACKGROUND_COLOR}
+              style={{backgroundColor: 'black', borderRadius: 0}}
             />
-            <Image
-              width={10}
-              height={10}
-              source={require('../assets/cards/card_master.png')}
-              style={styles.cards}
+            <Avatar.Icon
+              icon="phone"
+              size={50}
+              color={BACKGROUND_COLOR}
+              style={{backgroundColor: 'black', borderRadius: 0}}
+            />
+            <Avatar.Icon
+              icon="receipt"
+              size={50}
+              color={BACKGROUND_COLOR}
+              style={{backgroundColor: 'black', borderRadius: 0}}
+            />
+            <Avatar.Icon
+              icon="text"
+              size={50}
+              color={BACKGROUND_COLOR}
+              style={{backgroundColor: 'black', borderRadius: 0}}
+            />
+            <Avatar.Icon
+              icon="clipboard-text"
+              size={50}
+              color={BACKGROUND_COLOR}
+              style={{backgroundColor: 'black', borderRadius: 0}}
             />
           </View>
         }
@@ -79,7 +97,9 @@ const Home = ({navigation}) => {
                     : ICON_COLOR,
                 }}
               />
-              <Text style={styles.buttonText}>{isFlashOn ? 'ON' : 'OFF'}</Text>
+              <Text style={styles.buttonText}>
+                FLASH {isFlashOn ? 'ON' : 'OFF'}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonTouchable}
@@ -87,12 +107,26 @@ const Home = ({navigation}) => {
                 ToastAndroid.show('Comming soon!', ToastAndroid.SHORT);
               }}>
               <Avatar.Icon
+                icon="upload-outline"
+                size={50}
+                color={BACKGROUND_COLOR}
+                style={{backgroundColor: ICON_COLOR}}
+              />
+              <Text style={styles.buttonText}>UPLOAD</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={() => {
+                navigation.navigate('GenerateQr');
+              }}>
+              <Avatar.Icon
                 icon="qrcode-scan"
                 size={50}
                 color={BACKGROUND_COLOR}
                 style={{backgroundColor: ICON_COLOR}}
               />
-              <Text style={styles.buttonText}>MY QR CODE</Text>
+              <Text style={styles.buttonText}>GENERATE</Text>
             </TouchableOpacity>
           </View>
         }

@@ -24,7 +24,7 @@ export default function History({navigation}) {
     AsyncStorage.getItem('@history_list')
       .then(storedValue => {
         if (!storedValue) {
-          setListOfSeries([]);
+          setHistoryList([]);
         }
         const list = JSON.parse(storedValue);
         console.log('list=> ' + storedValue);

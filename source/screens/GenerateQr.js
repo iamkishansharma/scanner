@@ -1,16 +1,27 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import {Avatar} from 'react-native-paper';
+import {Avatar, TextInput} from 'react-native-paper';
+import { BACKGROUND_COLOR, ICON_COLOR } from '../utils/Constants';
 
-export default function MyQr({navigation}) {
-  const [walletId, setWalletId] = useState('+9779845852024');
+export default function GenerateQr({navigation}) {
+  const [generate, setGenerate] = useState('');
+  const [textInput, setTextInput] = useState('');
 
   return (
     <View style={styles.container}>
       <View
-        style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
-        <Text
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          left: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 10,
+          flexDirection:'row'
+        }}>
+        {/* <Text
           style={{
             color: 'gray',
             fontSize: 16,
@@ -19,45 +30,60 @@ export default function MyQr({navigation}) {
             textAlign: 'center',
           }}>
           Scan to pay {walletId}
-        </Text>
+        </Text> */}
+
+        <TextInput
+          value={textInput}
+          onChangeText={text => setTextInput(text)}
+          returnKeyType="done"
+          maxFontSizeMultiplier={4}
+          mode="outlined"
+          style={{margin: 5, flex: 1, width: '100%', backgroundColor: 'white'}}
+          placeholder="Write anything to create qr"
+        />
+        <TouchableOpacity onPress={()=>{
+          setGenerate("")
+          setTimeout(() => {
+            setGenerate(textInput)
+            setTextInput("")
+          }, 1000);
+        }}
+        style={{backgroundColor:'red',padding:2, borderRadius:100}}>
+          <Avatar.Icon
+                icon="arrow-right"
+                size={45}
+                color={BACKGROUND_COLOR}
+                style={{backgroundColor: 'black'}}
+              />
+        </TouchableOpacity>
       </View>
 
       <View
         style={{
+          marginTop: 20,
           padding: 15,
           backgroundColor: 'white',
           borderRadius: 5,
           elevation: 10,
           alignSelf: 'center',
         }}>
-        <QRCode
-          value={'nsrmt:' + walletId}
-          size={220}
-          logoBackgroundColor="transparent"
-        />
-      </View>
-      <View
-        style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
-        <Text
-          style={{
-            fontSize: 22,
-            width: '100%',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            color: 'gray',
-          }}>
-          Kishan Kumar Sharma
-        </Text>
+        {generate ? (
+          <QRCode
+            value={generate}
+            size={220}
+            logoBackgroundColor="transparent"
+          />
+        ) :  textInput? (
+          <Text>Generating...</Text>
+        ):(
+          <Text>Can not generate.</Text>
+        )}
       </View>
       <View
         style={{
           flexDirection: 'row',
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          left: 0,
           alignItems: 'center',
-          margin: 20,
+          margin: 10,
           justifyContent: 'space-evenly',
         }}>
         <TouchableOpacity
@@ -68,7 +94,7 @@ export default function MyQr({navigation}) {
           <Avatar.Icon
             icon="download"
             size={50}
-            color="purple"
+            color="white"
             style={{backgroundColor: 'gray'}}
           />
           <Text style={styles.buttonText}>Save</Text>
@@ -81,7 +107,7 @@ export default function MyQr({navigation}) {
           <Avatar.Icon
             icon="share"
             size={50}
-            color="purple"
+            color="white"
             style={{backgroundColor: 'gray'}}
           />
           <Text style={styles.buttonText}>Share</Text>
